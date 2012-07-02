@@ -1,0 +1,10 @@
+
+.captcha{
+    visibility:hidden
+}
+
+table.DreamLogin{
+    margin-left:auto;
+    margin-right:auto;
+    width:250;
+}
