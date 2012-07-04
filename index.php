@@ -1,53 +1,35 @@
 <html>
 <head>
 <?php
-include_once('utils/defines.php');
-include_once('utils/APC.class.php');
-include_once('utils/security_policy.php');
-include_once('utils/cookies.php');
 print("FIXME: Need to switch to https\n");
-$seckey = setSecurityKey();
-if (!$seckey) {
-  die("Possibly too many connections :-(");
-}
-if (isset($_COOKIE["loginRetry"])) {  
-  $retries = $_COOKIE["loginRetry"];
-} else {
-  $retries = 0;
-  resetLoginCookie();
-}
 ?>
-<link rel="stylesheet" type="text/css" href="../includes/style.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="login.css" media="screen" />
 <title> Login</title>
 <br />
-	<script type=’text/javascript’>
+<script type='text/javascript' src='login.js'></script>
+<script type='text/javascript'>
 function validate()
-{
-	var x=document.forms["login"]["username"].value
-		if (x==null || x=="")
-		{
-			alert(“Username Cannot Be Left Blank.");
-			return false;
-		}
-	var x=document.forms["login"]["password"].value
-		if (x==null || x=="")
-		{
-			alert(“password Cannot Be Left Blank.");
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+{ 
+  var x=document.forms["login"]["username"].value
+  if (x==null || x=="")
+  {
+    alert("Username Cannot Be Left Blank.");
+    return false;
+  }
+  var x=document.forms["login"]["password"].value
+  if (x==null || x=="")
+  {
+    alert("password Cannot Be Left Blank.");
+    return false;
+  }
+  showcaptcha();
+  return false;
+        
 }
 </script>
 </head>
 <body>
-<?php
-if ($retries != 0) {
-  echo "Username and password do not match.\n";
-}
-?>
+
 <form name="login" method="post" action="trylogin.php" onsubmit="return validate();" >
 
 <table class="DreamLogin">
@@ -88,6 +70,14 @@ if ($retries != 0) {
 </td>
 </tr>
 
+<tr id="captcha">
+<td class="captcha" width="150" align="center">
+</td>
+<td class="captcha" width="100" align="center">
+  <input class="DreamLoginCaptchaInput" type="text" name="captchaText"
+	 minlength="4" placeholder="captcha text">
+</td>
+</tr>
 <br />
 <br />
 <br />
