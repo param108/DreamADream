@@ -1,7 +1,6 @@
 <?php
-
-if (PHP_SAPI != "CLI") {
-	die("This script can only be run from CLI");
+if (PHP_SAPI != "cli") {
+	die("This script can only be run from CLI\n");
 }
 include_once(dirname(__FILE__)."/../config.php");
 $createQueries=array();
@@ -10,14 +9,14 @@ $createQueries[]="create database ".DB_NAME.";";
 #use it
 $createQueries[]="use ".DB_NAME.";";
 #create the login database
-$createQueries[]="create table ".DB_TABLE_LOGIN." ( userid int NOT NULL PRIMARY KEY , username varchar(20) NOT NULL UNIQUE KEY, retries int NOT NULL , password varchar(40) NOT NULL );"
+$createQueries[]="create table ".DB_TABLE_LOGIN." ( userid int NOT NULL PRIMARY KEY , username varchar(20) NOT NULL UNIQUE KEY, retries int NOT NULL , password varchar(40) NOT NULL );";
 #grant permissions
-$createQueries[]="grant all on ".DB_NAME.".* to '".DB_USER."'@'".DB_HOST."' identified by '".DB_PASSWORD."';"
+$createQueries[]="grant all on ".DB_NAME.".* to '".DB_USER."'@'".DB_HOST."' identified by '".DB_PASSWORD."';";
 
 #connect to the server mentioned
 
 if ($argc < 3) {
-	die(" usage $argv[0] <db host> <db user> <db pass>");
+	die(" usage $argv[0] <db host> <db user> <db pass>\n");
 }
 $host = $argv[1];
 $user = $argv[2];
@@ -31,7 +30,7 @@ if (count($argv)>3) {
 foreach($createQueries as $q) {
 	$ret = mysql_query($q);
 	if (!$ret) {
-		die("Failed Query:".$q);
+		die("Failed Query:".$q."\n");
 	}
 }
-die("Mysql setup success");
+die("Mysql setup success\n");
