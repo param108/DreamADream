@@ -71,11 +71,14 @@ function validate()
 <?php
 if (array_key_exists("retries",$_GET)) {
 	if($_GET["retries"] > 3) {
-		echo('<tr id="captcha">');
+		echo('<tr>');
 		echo('<td class="captcha" width="150" align="center">');
+		echo('<img id="captcha" src="/secureimage/securimage_show.php" alt="CAPTCHA Image" />');
 		echo('</td>');
 		echo('<td class="captcha" width="100" align="center">');
-  		echo('<input class="DreamLoginCaptchaInput" type="text" name="captchaText" minlength="4" placeholder="captcha text" required="required">');
+		echo('<input type="text" name="captcha_code" size="10" maxlength="6" />');
+		echo('<a href="#" onclick="document.getElementById(\'captcha\').src = \'/securimage/securimage_show.php?\' + Math.random(); return false">[ Different Image ]</a>');
+  		//echo('<input class="DreamLoginCaptchaInput" type="text" name="captchaText" minlength="4" placeholder="captcha text" required="required">');
 		echo('</td>');
 		echo('</tr>');
 	}

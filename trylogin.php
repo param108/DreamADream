@@ -1,6 +1,8 @@
 <?php
+session_start();
 include_once("config.php");
 include_once("util/DB.class.php");
+include_once(dirname(__FILE__)."/secureimage/securimage.php");
 
 if (array_key_exists("username",$_POST)) {
 	$loginDetails = DBHandler::getLoginDetails($_POST['username']);
@@ -16,6 +18,11 @@ if (array_key_exists("username",$_POST)) {
 	}
 	// check password
 	if ($loginDetails['password'] == sha1($_POST['password'])) {
+	  if ($loginDetails['retries'] > 3) {
+	    //check captcha
+	    $secureimage=new Securimage();
+	    
+	  }
 	  DBHandler::resetLoginRetries($_POST['username']);
 	  die("Login Successful");
 	}
