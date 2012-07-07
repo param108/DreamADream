@@ -3,7 +3,7 @@
 <?php
 print("FIXME: Need to switch to https\n");
 ?>
-<link rel="stylesheet" type="text/css" href="login.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="login.css?q=1" media="screen" />
 <title> Login</title>
 <br />
 <script type='text/javascript' src='login.js'></script>
@@ -71,13 +71,13 @@ function validate()
 <?php
 if (array_key_exists("retries",$_GET)) {
 	if($_GET["retries"] > 3) {
-		echo('<tr id="captcha">\n');
-		echo('<td class="captcha" width="150" align="center">\n');
-		echo('</td>\n');
-		echo('<td class="captcha" width="100" align="center">\n');
-  		echo('<input class="DreamLoginCaptchaInput" type="text" name="captchaText minlength="4" placeholder="captcha text" required="required">\n');
-		echo('</td>\n');
-		echo('</tr>\n');
+		echo('<tr id="captcha">');
+		echo('<td class="captcha" width="150" align="center">');
+		echo('</td>');
+		echo('<td class="captcha" width="100" align="center">');
+  		echo('<input class="DreamLoginCaptchaInput" type="text" name="captchaText" minlength="4" placeholder="captcha text" required="required">');
+		echo('</td>');
+		echo('</tr>');
 	}
 }?>
 <br />
