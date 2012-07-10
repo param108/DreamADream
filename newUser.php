@@ -17,9 +17,30 @@ function validate()
     alert("Password typed incorrectly");
     return false;
   }
-  var z=document.forms["login"]["username"].value
+
+  var z=document.forms["newUser"]["username"].value
   //check for username available
-  return true;
+  xmlhttp = new XMLHttpRequest();
+  xmlhttp.open("POST","checkUserExists.php",true);
+  xmlhttp.onreadystatechange=function() {
+    var x = document.getElementById('usernameUsed');
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+      {
+	var ret = eval(xmlhttp.responseText);
+	if (ret) {
+	  // go to a good place
+	  x.innerHTML = 'Name available';	
+	} else {
+	  // stay right here
+	  x.innerHTML = 'Please choose another name';	
+	}
+      } else {
+      x.innerHTML = 'Failure to load image'+xmlhttp.readyState+':'+xmlhttp.status;
+    }
+  };
+  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+  xmlhttp.send("username="+z);
+  return false;
 }
 </script>
 </head>
@@ -40,7 +61,7 @@ function validate()
 </tr>
 <tr>
   <td>Username:</td>
-  <td><input type="text" name="username" required="required"/></td>
+  <td><input type="text" name="username" required="required"/><div id='usernameUsed'></div></td>
 </tr>
 <tr>
    <td>Password:</td>
