@@ -76,7 +76,7 @@ if (array_key_exists("retries",$_GET)) {
 		echo('<img id="captcha" src="secureimage/securimage_show.php" alt="CAPTCHA Image" />');
 		echo('</td>');
 		echo('<td class="captcha" width="100" align="center">');
-		echo('<input type="text" name="captcha_code" size="10" maxlength="6" />');
+		echo('<input type="text" name="captcha_code" size="10" maxlength="6" required="required" />');
 		echo('<a href="#" onclick="document.getElementById(\'captcha\').src = \'secureimage/securimage_show.php?\' + Math.random(); return false">[ Different Image ]</a>');
 		echo('</td>');
 		echo('</tr>');
