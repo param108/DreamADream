@@ -51,12 +51,12 @@ function validate()
    <td><input type="password" name="rpassword" required="required"/></td>
 </tr>
 <tr>
-   <td>Captcha (type in the text you see in the image)</td>
-</tr>
-<tr>
    <td><img id="captcha" src="secureimage/securimage_show.php" alt="CAPTCHA Image" /></td>
-   <td><input type="text" name="captcha_code" size="10" maxlength="6" required="required" />
-<a href="#" onclick="document.getElementById(\'captcha\').src = \'secureimage/securimage_show.php?\' + Math.random(); return false">[ Different Image ]</a></td>
+   <td><a href="#" onclick="document.getElementById('captcha').src = 'secureimage/securimage_show.php?' + Math.random(); return false">[ Different Image ]</a></td>
+</tr>
+<tr>   
+   <td>Captcha (type in the text you see in the image)</td>
+   <td><input type="text" name="captcha_code" size="10" maxlength="6" required="required" /></td>
 </tr>
 </table>
    <input type="submit" name="submit" value="Submit">
