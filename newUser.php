@@ -6,8 +6,42 @@ print("FIXME: Need to switch to https\n");
 <link rel="stylesheet" type="text/css" href="login.css?q=1" media="screen" />
 <title> Login</title>
 <br />
+<script type='text/javascript' src='lib/jquery-1.7.2.js'></script>
 <script type='text/javascript' src='login.js'></script>
 <script type='text/javascript'>
+   var nameready= false;
+   $(document).ready(function () {
+	 $('#newUserNameText').focusout(function checkUserExists(){
+	     var z=document.forms["newUser"]["username"].value
+	       if (z == "") {
+		 return;
+	       }
+	     //check for username available
+	     xmlhttp = new XMLHttpRequest();
+	     xmlhttp.open("POST","checkUserExists.php",true);
+	     xmlhttp.onreadystatechange=function() {
+	       var x = document.getElementById('usernameUsed');
+	       if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		 {
+		   var ret = eval(xmlhttp.responseText);
+		   if (ret) {
+		     // go to a good place
+		     x.innerHTML = 'Name available';	
+		     nameready = true;
+		   } else {
+		     // stay right here
+		     x.innerHTML = 'Please choose another name';	
+		     nameready = false;
+		   }
+		 } else {
+		 x.innerHTML = 'Failure to load image'+xmlhttp.readyState+':'+xmlhttp.status;
+	       }
+	     };
+	     xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+	     xmlhttp.send("username="+z);
+	   });
+     });
+
 function validate()
 { 
   var x=document.forms["newUser"]["password"].value
@@ -18,29 +52,10 @@ function validate()
     return false;
   }
 
-  var z=document.forms["newUser"]["username"].value
-  //check for username available
-  xmlhttp = new XMLHttpRequest();
-  xmlhttp.open("POST","checkUserExists.php",true);
-  xmlhttp.onreadystatechange=function() {
-    var x = document.getElementById('usernameUsed');
-    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-      {
-	var ret = eval(xmlhttp.responseText);
-	if (ret) {
-	  // go to a good place
-	  x.innerHTML = 'Name available';	
-	} else {
-	  // stay right here
-	  x.innerHTML = 'Please choose another name';	
-	}
-      } else {
-      x.innerHTML = 'Failure to load image'+xmlhttp.readyState+':'+xmlhttp.status;
-    }
-  };
-  xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-  xmlhttp.send("username="+z);
-  return false;
+  if (nameready == false) {
+    return false;
+  }
+  return true;
 }
 </script>
 </head>
@@ -61,7 +76,7 @@ function validate()
 </tr>
 <tr>
   <td>Username:</td>
-  <td><input type="text" name="username" required="required"/><div id='usernameUsed'></div></td>
+  <td><input type="text" id="newUserNameText" name="username" required="required"/><div id='usernameUsed'></div></td>
 </tr>
 <tr>
    <td>Password:</td>

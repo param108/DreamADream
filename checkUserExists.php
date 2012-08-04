@@ -1,7 +1,6 @@
 <?php
 include_once('config.php');
 include_once('util/DB.class.php');
-error_log("Included DB");
 if (!array_key_exists("username",$_POST)) {
   echo "false";
   exit;
